@@ -24,7 +24,7 @@ class PendenteRequest extends FormRequest
     public function rules()
     {
         return [
-            'data'          => 'required|date|before_or_equal:date',
+            'data'          => 'required|date|after_or_equal:date',
             'cliente_id'    => 'required|numeric|exists:clientes,id',
             'barbeiro_id'   => 'required|numeric|exists:barbeiros,id',
         ];
