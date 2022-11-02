@@ -15,7 +15,7 @@
                     </p>
                 </li>
                 <hr>
-                <span class="text-danger">Pendente</span>
+                <span class="text-primary">Solicitado</span>
                 <li v-for="(dado, j) in pendentes" :key="j">
                     <p v-if="!dado.agendado">
                         {{ dado.nome }}
@@ -59,8 +59,7 @@ onMounted(()
     busca(path, action, store)
         .then(() => loading.value = false)
         .catch(() => loading.value = false)
-}
-)
+})
 
 watch(() => bus.on(Events.recarrega_horarios_pendente),
     () => busca(path, action, store))
