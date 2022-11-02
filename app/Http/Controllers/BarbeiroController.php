@@ -25,7 +25,7 @@ class BarbeiroController extends Controller
                 'bairro', 'rua', 'numero', 'cep',
                 'horario_inicio', 'horario_fim', 'semAgenda')
             ->join('enderecos', 'endereco_id', 'enderecos.id')
-            //->where('cidade', $cliente->cidade)
+            ->where('cidade', $cliente->cidade)
             ->get();
     }
 }
