@@ -5,7 +5,7 @@
                 Horarios Disponiveis
             </h1>
             <div v-if="date" class="row">
-                <p v-if="agendados > 0">
+                <p v-if="possuiAgendamento">
                     Você já possui horario agendado
                 </p>
                 <p v-else-if="disponiveis.length == 0">
@@ -24,7 +24,7 @@ import horario from '../buttons/horario.vue'
 import { busca } from '@/core/functions'
 import { computed, ref, watch } from 'vue'
 import { useStore } from 'vuex'
-import { Barbeiro, Pendente, State } from '@/core/interfaces'
+import { Barbeiro, State } from '@/core/interfaces'
 import { Actions } from '@/core/enums'
 const store = useStore()
 const state: State = store.state
@@ -37,7 +37,7 @@ const props = defineProps({
 })
 
 const disponiveis = ref<string[]>([])
-const path: string = 'agendamento'
+const path: string = 'agendamento/agenda'
 const action: string = Actions.alteraHorariosAgendados
 const today: Date = new Date()
 
@@ -49,15 +49,13 @@ const diaSelecionado = computed(()
     : number =>
     state.diaSelecionado
 )
-const pendentes = computed(()
-    : Pendente[] =>
-    state.horarios.pendentes
+const limiteSolicitacoes = computed(()
+    : boolean =>
+    state.horarios.pendentes.length >= 3
 )
-const agendados = computed(()
-    : number =>
-    pendentes.value
-        .filter(pend => pend.agendado)
-        .length
+const possuiAgendamento = computed(()
+    : boolean =>
+    state.horarios.agendados.length > 0
 )
 
 watch((): string => props.date,
@@ -67,8 +65,8 @@ watch((): number => barbeiro.value.id,
 
 const geraHorarios = ()
     : void => {
-    if (agendados.value > 0 ||
-        pendentes.value.length >= 3) return;
+    if (possuiAgendamento.value ||
+        limiteSolicitacoes.value) return;
 
     const ini = barbeiro.value.horario_inicio.slice(0, 5)
     const fim = barbeiro.value.horario_fim.slice(0, 5)
