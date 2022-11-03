@@ -37,8 +37,7 @@ interface Pendente {
     barbeiro_id: number,
     created_at: Date,
     updated_at: Date,
-    nome: string,
-    agendado: number
+    nome: string
 }
 
 interface Agendamento {
@@ -49,9 +48,16 @@ interface Agendamento {
     data: string
 }
 
+interface Agendado {
+    id: number,
+    pendente_id: number,
+    data: string,
+    nome: string
+}
+
 interface Horarios {
     pendentes: Pendente[],
-    agendados: Agendamento[],
+    agendados: Agendado[],
     limite: number
 }
 
@@ -83,6 +89,7 @@ export {
     Barbeiro,
     Pendente,
     Agendamento,
+    Agendado,
     Horarios,
     Usuario,
     Bus,

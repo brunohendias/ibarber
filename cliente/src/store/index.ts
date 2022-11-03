@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
 import {
-    State, Agendamento, Barbeiro, Cliente,
+    State, Barbeiro, Cliente, Agendado,
     Endereco, Pendente, Usuario
 } from '@/core/interfaces'
 import { Mutations } from '@/core/enums'
@@ -55,7 +55,7 @@ const mutations = {
         (state: State, value: Pendente[]) =>
             state.horarios.pendentes = value,
     [Mutations.ALTERA_HORARIOS_AGENDADOS]:
-        (state: State, value: Agendamento[]) =>
+        (state: State, value: Agendado[]) =>
             state.horarios.agendados = value,
     [Mutations.ALTERA_BARBEIROS]:
         (state: State, value: Barbeiro[]) =>
@@ -92,7 +92,7 @@ export default createStore({
             context.commit(Mutations.ALTERA_BARBEIROS, value),
         f: (context, value: Pendente[]): void =>
             context.commit(Mutations.ALTERA_HORARIOS_PENDENTES, value),
-        g: (context, value: Agendamento[]): void =>
+        g: (context, value: Agendado[]): void =>
             context.commit(Mutations.ALTERA_HORARIOS_AGENDADOS, value),
         h: (context, value: number): void =>
             context.commit(Mutations.ALTERA_DIA_SELECIONADO, value)

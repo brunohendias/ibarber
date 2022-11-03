@@ -24,12 +24,15 @@ class PendenteController extends Controller
 
         return is_null($cliente)
             ? [] 
-            : $this->model->select('pendentes.id', 'data',
-                'nome', DB::raw('agendamentos.id agendado'))
+            : $this->model->select('pendentes.id','data','nome')
                 ->join('barbeiros', 'barbeiro_id', 'barbeiros.id')
-                ->leftJoin('agendamentos', 'pendente_id', 'pendentes.id')
                 ->where('cliente_id', $cliente->id)
                 ->whereRaw('data > '.date($this->today))
+                ->whereNotExists(function ($query) {
+                    $query->select(DB::raw(1))
+                          ->from('agendamentos')
+                          ->whereColumn('pendentes.id', 'agendamentos.pendente_id');
+                })
                 ->get();
     }
     

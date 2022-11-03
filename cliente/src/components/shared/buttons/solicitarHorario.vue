@@ -18,10 +18,8 @@ const path: string = 'pendente'
 const loading = ref<boolean>(false)
 
 const possuiAgendamento = computed(()
-    : number =>
-    state.horarios.pendentes
-        .filter(pend => pend.agendado)
-        .length
+    : boolean =>
+    state.horarios.agendados.length > 0
 )
 
 const cliente = computed(()
@@ -37,7 +35,7 @@ const props = defineProps({
 })
 
 const send = () => {
-    if (possuiAgendamento.value > 0) {
+    if (possuiAgendamento.value) {
         return;
     }
     const body = {

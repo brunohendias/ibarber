@@ -2,7 +2,8 @@ enum Events {
     info_auth = 'a',
     error_auth = 'b',
     recarrega_horarios_pendente = 'c',
-    recarrega_cliente = 'd'
+    recarrega_cliente = 'd',
+    recarrega_horarios_agendado = 'e'
 }
 
 enum Mutations {

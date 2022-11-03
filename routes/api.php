@@ -14,7 +14,8 @@ Route::middleware('auth:sanctum')->group(function () {
         });
         Route::controller(AgendamentoController::class)->group(function () {
             Route::prefix('agendamento')->group(function () {
-                Route::get('/', 'index');
+                Route::get('/agenda', 'barbeiroAgenda');
+                Route::get('/cliente', 'cliente');
             });
         });
         Route::controller(BarbeiroController::class)->group(function () {

@@ -3,13 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agendamento;
+use App\Models\Cliente;
 use Illuminate\Http\Request;
 
 class AgendamentoController extends Controller
 {
     public function __construct(private Agendamento $model) {}
 
-    public function index(Request $request)
+    public function cliente()
+    {
+        $user = auth('sanctum')->user()->id;
+
+        $cliente = Cliente::select('id')
+            ->where('user_id', $user)
+            ->first();
+
+        return is_null($cliente)
+            ? [] 
+            : $this->model->select('agendamentos.id','pendente_id','data','nome')
+                ->join('pendentes', 'pendente_id', 'pendentes.id')
+                ->join('barbeiros', 'barbeiro_id', 'barbeiros.id')
+                ->where('cliente_id', $cliente->id)
+                ->get();
+    }
+
+    public function barbeiroAgenda(Request $request)
     {
         return $this->model
             ->select('data')
